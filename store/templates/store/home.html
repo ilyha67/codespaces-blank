@@ -1,0 +1,39 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-8">Магазин расширений для ПК</h1>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+    {% for cat in categories %}
+    <a href="/search/?category={{ cat.slug }}" class="bg-white p-4 rounded-lg shadow text-center hover:shadow-lg">
+        <div class="text-3xl mb-2">📁</div>
+        <div class="font-semibold">{{ cat.name }}</div>
+        <div class="text-sm text-gray-500">{{ cat.ext_count }} расширений</div>
+    </a>
+    {% endfor %}
+</div>
+
+<h2 class="text-2xl font-bold mb-4">Пользуются популярностью:</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+    {% for ext in popular %}
+    <div class="bg-white rounded-lg shadow p-4">
+        <img src="{{ ext.icon }}" class="w-16 h-16 mx-auto mb-3">
+        <h3 class="font-bold text-center">{{ ext.name }}</h3>
+        <p class="text-sm text-gray-500 text-center">{{ ext.category.name }}</p>
+        <a href="/extension/{{ ext.slug }}/" class="block mt-3 bg-blue-600 text-white text-center py-2 rounded">Подробнее</a>
+    </div>
+    {% endfor %}
+</div>
+
+<h2 class="text-2xl font-bold mb-4">Недавно добавленные:</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    {% for ext in new %}
+    <div class="bg-white rounded-lg shadow p-4">
+        <img src="{{ ext.icon }}" class="w-16 h-16 mx-auto mb-3">
+        <h3 class="font-bold text-center">{{ ext.name }}</h3>
+        <p class="text-sm text-gray-500 text-center">{{ ext.category.name }}</p>
+        <a href="/extension/{{ ext.slug }}/" class="block mt-3 bg-blue-600 text-white text-center py-2 rounded">Подробнее</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

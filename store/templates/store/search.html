@@ -1,0 +1,36 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-4">{% if query %}Поиск: "{{ query }}"{% else %}Все расширения{% endif %}</h1>
+
+<div class="flex gap-8">
+    <div class="w-64 bg-white p-4 rounded-lg shadow h-fit">
+        <h3 class="font-bold mb-3">Категории</h3>
+        <a href="?q={{ query }}&sort={{ sort }}" class="block py-1">Все</a>
+        {% for cat in categories %}
+        <a href="?q={{ query }}&category={{ cat.slug }}&sort={{ sort }}" class="block py-1">{{ cat.name }}</a>
+        {% endfor %}
+        <h3 class="font-bold mt-4 mb-3">Сортировка</h3>
+        <a href="?q={{ query }}&category={{ category }}&sort=downloads" class="block py-1">📊 По скачиваниям</a>
+        <a href="?q={{ query }}&category={{ category }}&sort=rating" class="block py-1">⭐ По рейтингу</a>
+        <a href="?q={{ query }}&category={{ category }}&sort=new" class="block py-1">🆕 По новизне</a>
+    </div>
+    
+    <div class="flex-1">
+        {% if extensions %}
+            {% for ext in extensions %}
+            <div class="bg-white rounded-lg shadow p-4 flex items-center gap-4 mb-4">
+                <img src="{{ ext.icon }}" class="w-16 h-16">
+                <div class="flex-1">
+                    <a href="/extension/{{ ext.slug }}/" class="text-xl font-bold hover:text-blue-600">{{ ext.name }}</a>
+                    <p class="text-gray-600">{{ ext.description|truncatewords:20 }}</p>
+                </div>
+                <a href="/download/{{ ext.slug }}/" class="bg-green-600 text-white px-6 py-2 rounded">Скачать</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-gray-500 py-12">Ничего не найдено 😢</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

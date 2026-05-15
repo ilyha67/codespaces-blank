@@ -1,0 +1,22 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-8">
+    <div class="flex items-start gap-8">
+        <img src="{{ extension.icon }}" class="w-32 h-32">
+        <div class="flex-1">
+            <h1 class="text-3xl font-bold">{{ extension.name }}</h1>
+            <p class="text-gray-600">Версия {{ extension.version }} | {{ extension.category.name }}</p>
+            <div class="flex gap-4 mt-4">
+                <span class="bg-yellow-100 px-3 py-1 rounded">⭐ {{ extension.rating }}</span>
+                <span class="bg-blue-100 px-3 py-1 rounded">⬇️ {{ extension.download_count }} скачиваний</span>
+            </div>
+        </div>
+        <a href="/download/{{ extension.slug }}/" class="bg-green-600 text-white text-xl px-8 py-3 rounded">⬇️ Скачать</a>
+    </div>
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold mb-4">Описание</h2>
+        <p class="text-gray-700">{{ extension.description }}</p>
+    </div>
+</div>
+{% endblock %}
