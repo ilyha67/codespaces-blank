@@ -1,0 +1,14 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body text-center">
+            <h2>👤 {{ user.username }}</h2>
+            <p class="text-muted">{{ user.email }}</p>
+            <p>Зарегистрирован: {{ user.date_joined|date:"d.m.Y" }}</p>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

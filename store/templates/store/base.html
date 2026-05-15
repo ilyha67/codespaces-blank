@@ -14,7 +14,17 @@
                 <form action="/search/" method="GET" class="flex-1 max-w-md mx-8">
                     <input type="text" name="q" placeholder="Поиск расширений..." class="w-full px-4 py-2 border rounded-lg">
                 </form>
-                <a href="/admin/" class="text-gray-600">Админка</a>
+                <div class="flex gap-4 items-center">
+                    {% if user.is_authenticated %}
+                        <span class="text-gray-700">Привет, {{ user.username }}!</span>
+                        <a href="{% url 'profile' %}" class="text-gray-600 hover:text-blue-600">Профиль</a>
+                        <a href="{% url 'logout' %}" class="text-gray-600 hover:text-red-600">Выйти</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="text-gray-600 hover:text-blue-600">Вход</a>
+                        <a href="{% url 'register' %}" class="text-gray-600 hover:text-blue-600">Регистрация</a>
+                    {% endif %}
+                    <a href="/admin/" class="text-gray-600 hover:text-orange-600">Админка</a>
+                </div>
             </div>
         </div>
     </nav>
