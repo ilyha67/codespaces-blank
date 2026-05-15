@@ -20,7 +20,7 @@ class Extension(models.Model):
     developer = models.ForeignKey(User, on_delete=models.CASCADE)
     
     file = models.FileField(upload_to='extensions/', blank=True, null=True)
-    icon = models.URLField(default='https://via.placeholder.com/128')
+    icon = models.ImageField(upload_to='extensions/icons/', blank=True, null=True)
     
     download_count = models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)

@@ -11,9 +11,9 @@
         <a href="?q={{ query }}&category={{ cat.slug }}&sort={{ sort }}" class="block py-1">{{ cat.name }}</a>
         {% endfor %}
         <h3 class="font-bold mt-4 mb-3">Сортировка</h3>
-        <a href="?q={{ query }}&category={{ category }}&sort=downloads" class="block py-1">📊 По скачиваниям</a>
-        <a href="?q={{ query }}&category={{ category }}&sort=rating" class="block py-1">⭐ По рейтингу</a>
-        <a href="?q={{ query }}&category={{ category }}&sort=new" class="block py-1">🆕 По новизне</a>
+        <a href="?q={{ query }}&category={{ category }}&sort=downloads" class="block py-1">По скачиваниям</a>
+        <a href="?q={{ query }}&category={{ category }}&sort=rating" class="block py-1">По рейтингу</a>
+        <a href="?q={{ query }}&category={{ category }}&sort=new" class="block py-1">По новизне</a>
     </div>
     
     <div class="flex-1">
@@ -29,7 +29,7 @@
             </div>
             {% endfor %}
         {% else %}
-            <p class="text-center text-gray-500 py-12">Ничего не найдено 😢</p>
+            <p class="text-center text-gray-500 py-12">Ничего не найдено</p>
         {% endif %}
     </div>
 </div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Count
-from .models import Extension, Category
+from .models import Extension, Category, Review
 
 def home(request):
     popular = Extension.objects.order_by('-download_count')[:8]
@@ -15,6 +15,18 @@ def home(request):
 
 def extension_detail(request, slug):
     ext = get_object_or_404(Extension, slug=slug)
+    
+
+    if request.method == 'POST':
+        Review.objects.create(
+            extension=ext,
+            user=request.user,
+            rating=request.POST.get('rating'),
+            comment=request.POST.get('comment')
+        )
+
+        return redirect('detail', slug=slug)
+    
     return render(request, 'store/detail.html', {'extension': ext})
 
 def search(request):
