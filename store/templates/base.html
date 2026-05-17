@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ExtensionMarket{% endblock %}</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f0f0f0;
+        }
+        .header {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .footer {
+            background: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <div class="header">
+        <a href="/" class="logo">PCextensionMarket</a>
+        
+        <!-- Форма поиска — отправляет GET-запрос на /search/ -->
+        <form action="/search/" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Поиск расширений..." class="search-input">
+        </form>
+        
+        <a href="/admin/" class="admin-link">Админка</a>
+    </div>
+    
+    <div class="container">
+        {% block content %}
+        <!-- Сюда подставляется содержимое из home.html, search.html, detail.html -->
+        {% endblock %}
+    </div>
+    
+    <div class="footer">
+        Магазин расширений для ПК — учебный проект
+    </div>
+    
+</body>
+</html>

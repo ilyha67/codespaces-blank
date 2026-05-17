@@ -1,70 +1,67 @@
-{% extends 'store/base.html' %}
+{% extends 'base.html' %}
+
+{% block title %}{{ extension.name }}{% endblock %}
 
 {% block content %}
-<div class="bg-white rounded-lg shadow p-8">
-    <div class="flex items-start gap-8">
-        <img src="{{ extension.icon }}" class="w-32 h-32">
-        <div class="flex-1">
-            <h1 class="text-3xl font-bold">{{ extension.name }}</h1>
-            <p class="text-gray-600">Версия {{ extension.version }} | {{ extension.category.name }}</p>
-            <div class="flex gap-4 mt-4">
-                <span class="bg-yellow-100 px-3 py-1 rounded"> {{ extension.rating }}</span>
-                <span class="bg-blue-100 px-3 py-1 rounded"> {{ extension.download_count }} скачиваний</span>
-            </div>
-        </div>
-        <a href="/download/{{ extension.slug }}/" class="bg-green-600 text-white text-xl px-8 py-3 rounded">Скачать</a>
-    </div>
-    <div class="mt-8">
-        <h2 class="text-2xl font-bold mb-4">Описание</h2>
-        <p class="text-gray-700">{{ extension.description }}</p>
-    </div>
-</div>
-    <!-- БЛОК ОТЗЫВОВ -->
-    <div class="mt-10 border-t pt-8">
-        <h2 class="text-2xl font-bold mb-6">Отзывы</h2>
 
+    <div style="background: white; padding: 25px; border-radius: 10px;">
+        
+        <!-- ШАПКА: иконка, название, кнопка скачивания -->
+        <div style="display: flex; gap: 25px;">
+            <img src="{{ extension.icon }}" style="width: 100px;">
+            <div style="flex: 1;">
+                <h1>{{ extension.name }}</h1>
+                <p>Версия {{ extension.version }} | {{ extension.category.name }}</p>
+                <span>★ {{ extension.rating }}</span>
+                <span>↓ {{ extension.download_count }} скачиваний</span>
+            </div>
+            <a href="/download/{{ extension.slug }}/" style="background: #16a34a; color: white; padding: 12px 30px; border-radius: 8px;">Скачать</a>
+        </div>
+        
+        <h2>Описание</h2>
+        <p>{{ extension.description }}</p>
+        
+        <h2>Отзывы</h2>
+        
         {% if extension.reviews.all %}
             {% for review in extension.reviews.all %}
-            <div class="border-b pb-4 mb-4">
-                <div class="flex justify-between items-center">
-                    <span class="font-bold">{{ review.user.username }}</span>
-                    <span class="text-yellow-500">
-                        {% for i in ""|ljust:review.rating %}★{% endfor %}
-                        {% for i in ""|ljust:5|slice:review.rating|length|make_list|slice:review.rating %}☆{% endfor %}
-                    </span>
+                <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
+                    <div>
+                        <strong>{{ review.user.username }}</strong>
+                        <span>
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    <p>{{ review.comment }}</p>
+                    <small>{{ review.created_at|date:"d.m.Y" }}</small>
                 </div>
-                <p class="text-gray-700 mt-2">{{ review.comment }}</p>
-                <small class="text-gray-400">{{ review.created_at|date:"d.m.Y" }}</small>
-            </div>
             {% endfor %}
         {% else %}
-            <p class="text-gray-500">Пока нет отзывов. Будьте первым!</p>
+            <p>Пока нет отзывов.</p>
         {% endif %}
-
-        <!-- ФОРМА ДЛЯ НОВОГО ОТЗЫВА -->
-        <div class="mt-8 bg-gray-50 p-4 rounded-lg">
-            <h3 class="text-xl font-bold mb-4">Написать отзыв</h3>
+        
+        <!-- ФОРМА ОТПРАВКИ ОТЗЫВА -->
+        <div style="margin-top: 30px; background: #f9f9f9; padding: 20px;">
+            <h3>Написать отзыв</h3>
             <form method="post">
                 {% csrf_token %}
-                <div class="mb-4">
-                    <label class="block font-bold mb-2">Оценка:</label>
-                    <select name="rating" class="border rounded px-3 py-2">
-                        <option value="5">★★★★★ (5)</option>
-                        <option value="4">★★★★☆ (4)</option>
-                        <option value="3">★★★☆☆ (3)</option>
-                        <option value="2">★★☆☆☆ (2)</option>
-                        <option value="1">★☆☆☆☆ (1)</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label class="block font-bold mb-2">Комментарий:</label>
-                    <textarea name="comment" rows="4" class="w-full border rounded px-3 py-2" placeholder="Поделитесь впечатлениями..."></textarea>
-                </div>
-                <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
-                    Отправить отзыв
-                </button>
+                
+                <select name="rating">
+                    <option value="5">★★★★★ (5)</option>
+                    <option value="4">★★★★☆ (4)</option>
+                    <option value="3">★★★☆☆ (3)</option>
+                    <option value="2">★★☆☆☆ (2)</option>
+                    <option value="1">★☆☆☆☆ (1)</option>
+                </select>
+                
+                <textarea name="comment" rows="4" style="width: 100%;"></textarea>
+                
+                <button type="submit">Отправить отзыв</button>
             </form>
-            <p class="text-sm text-gray-500 mt-3">※ Чтобы оставить отзыв, нужно войти в аккаунт</p>
         </div>
+        
     </div>
+
 {% endblock %}

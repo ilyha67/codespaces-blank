@@ -1,44 +1,48 @@
-{% extends 'store/base.html' %}
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold mb-8">Магазин расширений для ПК</h1>
 
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-    {% for cat in categories %}
-    <a href="/search/?category={{ cat.slug }}" class="bg-white p-4 rounded-lg shadow text-center hover:shadow-lg">
-        <div class="text-3xl mb-2">📁</div>
-        <div class="font-semibold">{{ cat.name }}</div>
-        <div class="text-sm text-gray-500">{{ cat.ext_count }} расширений</div>
-    </a>
-    {% endfor %}
-</div>
+    <h1 style="font-size: 28px;">Магазин расширений для ПК</h1>
 
-<h2 class="text-2xl font-bold mb-4">Пользуются популярностью:</h2>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-    {% for ext in popular %}
-    <div class="bg-white rounded-lg shadow p-4">
-        <img src="{{ ext.icon }}" class="w-16 h-16 mx-auto mb-3">
-        <h3 class="font-bold text-center">{{ ext.name }}</h3>
-        <p class="text-sm text-gray-500 text-center">{{ ext.category.name }}</p>
-        <a href="/extension/{{ ext.slug }}/" class="block mt-3 bg-blue-600 text-white text-center py-2 rounded">Подробнее</a>
+    <h2>Категории</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        {% for cat in categories %}
+            <!-- category=cat.slug — передаём slug для фильтрации поиска -->
+            <a href="/search/?category={{ cat.slug }}" style="background: white; padding: 15px 25px; border-radius: 10px; text-align: center;">
+                <div>📁</div>
+                <div>{{ cat.name }}</div>
+                <!-- ext_count — сколько расширений в категории (посчитано в views.py через annotate(Count)) -->
+                <div>{{ cat.ext_count }} расшир.</div>
+            </a>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
-<h2 class="text-2xl font-bold mb-4">Недавно добавленные:</h2>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-    {% for ext in new %}
-    <div class="bg-white rounded-lg shadow p-4">
-        <img src="{{ ext.icon }}" class="w-16 h-16 mx-auto mb-3">
-        <h3 class="font-bold text-center">{{ ext.name }}</h3>
-        <p class="text-sm text-gray-500 text-center">{{ ext.category.name }}</p>
-        <a href="/extension/{{ ext.slug }}/" class="block mt-3 bg-blue-600 text-white text-center py-2 rounded">Подробнее</a>
+    <h2>Популярные</h2>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        {% for ext in popular %}
+            <div style="background: white; padding: 15px; width: 200px; text-align: center;">
+                <img src="{{ ext.icon }}" style="width: 64px; height: 64px;">
+                <h3>{{ ext.name }}</h3>
+                <a href="/extension/{{ ext.slug }}/">Подробнее</a>
+            </div>
+        {% empty %}
+            <p>Пока нет популярных расширений</p>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-<div class="mt-12 text-center">
-    <img src="https://cdn.dailysports.net/brand-rating/brand/295f099d5bda0430049957c3a3bbd61a721873424631234c4f4fa61a26220ad5.png" 
-         alt="Рекламный баннер" 
-         class="w-256 h-auto shadow-md object-cover">
-</div>
+    
+    <h2>Новинки</h2>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        {% for ext in new %}
+            <div style="background: white; padding: 15px; width: 200px; text-align: center;">
+                <img src="{{ ext.icon }}" style="width: 64px; height: 64px;">
+                <h3>{{ ext.name }}</h3>
+                <a href="/extension/{{ ext.slug }}/">Подробнее</a>
+            </div>
+        {% empty %}
+            <p>Пока нет новых расширений</p>
+        {% endfor %}
+    </div>
+
 {% endblock %}
