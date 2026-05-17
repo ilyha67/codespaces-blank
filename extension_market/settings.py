@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-замени-это-на-свой-ключ'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.app.github.dev', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -74,3 +74,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
+
+CSRF_TRUSTED_ORIGINS = ['https://%2A.app.github.dev/', 'http://%2A.app.github.dev/']
